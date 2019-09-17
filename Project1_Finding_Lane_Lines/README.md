@@ -11,3 +11,7 @@ The pipeline consists of following 6 steps:
 6. Combine the line image with the original image
 
 This is a very simple pipeline involving only **computer vision** and **manual parameter tuning**.
+
+## Image Output
+Following is one example of the lane lines detection on the road.
+![test_output](/test_images_output/solidYellowCurve.jpg) 
