@@ -10,4 +10,4 @@ The pipeline consists of following 6 steps:
 5. Apply Hough Transform on the masked image after Canny Transform to create the line image
 6. Combine the line image with the original image
 
-This is a very simple pipeline involving only computer vision and manual parameter tuning.
+This is a very simple pipeline involving only **computer vision** and **manual parameter tuning**.
