@@ -14,4 +14,4 @@ This is a very simple pipeline involving only **computer vision** and **manual p
 
 ## Image Output
 Following is one example of the lane lines detection on the road.
-![test_output](/test_images_output/solidYellowCurve.jpg) 
+![test_output](/Project1_Finding_Lane_Lines/test_images_output/solidYellowCurve.jpg) 
