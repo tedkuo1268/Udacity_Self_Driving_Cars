@@ -20,4 +20,4 @@ Following is one example of the lane lines detection on the road.
 ## Video Output
 A short [video demo](https://youtu.be/V2bR1DL7FD8) of the pipeline can be found here:
 
-![video_output](https://youtu.be/V2bR1DL7FD8)
+![<img src="https://i9.ytimg.com/vi/V2bR1DL7FD8/mq1.jpg?sqp=CMmIhuwF&rs=AOn4CLD4eu_okS4dSJDyI8sVlHzXd_PkCg">](https://youtu.be/V2bR1DL7FD8)
