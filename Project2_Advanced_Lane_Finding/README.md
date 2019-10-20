@@ -25,7 +25,9 @@ First of all, I prepared "object points" `obj_p`, which will be the (x, y, z) co
 
 I then used the output `obj_points` and `img_points` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
-![alt text][image1]
+Original Image            |  Undistorted Image
+:-------------------------:|:-------------------------:
+![alt_text](/Project2_Advanced_Lane_Finding/output_images/chessboard.jpg)  |  ![alt_text](/Project2_Advanced_Lane_Finding/output_images/undist_chessboard.jpg) 
 
 ### Pipeline (single images)
 
