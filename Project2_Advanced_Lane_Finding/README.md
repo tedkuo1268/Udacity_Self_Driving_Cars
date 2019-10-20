@@ -56,7 +56,7 @@ This step is contained in the code cells under **Perspective Transform** of the 
 First, I used trial and error to find the lines which are parallel to the straight road lines in the original undistorted image like the image below:
 ![alt text](/Project2_Advanced_Lane_Finding/output_images/find_parallel_straight_lines.jpg) 
 
-Then the four vertices (two for each line), will serve as the hardcoded souce points (`src`). The destination points (`dst`) will just be the same size as the original image. The souce points (`src`). The destination points (`dst`) I chose are as follow:
+Then the four vertices (two for each line), will serve as the hardcoded souce points (`src`). The destination points (`dst`) will just be the same size as the original image. The souce points (`src`) and th destination points (`dst`) I chose are as follow:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
@@ -71,7 +71,17 @@ After haveing the source and destination points, we can use the `cv2.getPerspect
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+This step is contained in the code cells under **Lane Detection** of the IPython notebook [Project2_Advanced_Lane_Finding.ipynb](/Project2_Advanced_Lane_Finding/Project2_Advanced_Lane_Finding.ipynb).
+
+There are two different ways to identify lane-line pixels in a image:
+
+1. **Search by using sliding windows**: Find lines by using sliding windows from the bottom of the image. The starting points of the left and right lines are the highest peaks from the left and right halves of the histogram of the activated binary pixels. Then we slide the search windows toward the top of the image and identify all the lane-line pixels. This method is implemented in `find_lane_pixels_by_sliding_windows()`
+
+2.**Search around the polynomials from the previous frame**: Find lines by searching around the polynomial from the previous frame within a given margin. This method is implemented in `find_lane_pixels_by_searching_around_poly()`
+
+If the frame is brand-new or the lines from previous frame are not detected, we should use sliding windows to search from the bottom to the top of the image, because we don't have any polynomials to search around. However, this is time-consuming, and therefore, if we have the detected polynomials from the previous frame, we can search around them to find lane-line pixels, which would be more efficient.
+
+To make the code more organized, I created a class `Line` 
 
 ![alt text][image5]
 
