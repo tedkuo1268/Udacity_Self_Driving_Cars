@@ -21,9 +21,9 @@ The goals / steps of this project are the following:
 
 The code for this step is contained in the code cells under **Camera Calibration and Image Undistortion** of the IPython notebook located in "./Project2_Advanced_Lane_Finding/Project2_Advanced_Lane_Finding.ipynb".
 
-I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
+First of all, I prepared "object points" `obj_p`, which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image. To detect the calibration pattern, I used the function `cv2.findChessboardCorners()` to find all the chessboard corners in [camera_cal](). These corners will then be appended to `img_points`, which are 2D points on image, with the (x, y) pixel position, and every time the corners are detected, `obj_p` will be appended to `obj_points`.
 
-I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
+I then used the output `obj_points` and `img_points` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
 ![alt text][image1]
 
