@@ -1,5 +1,5 @@
 # Project 4 - Advanced Lane Finding
-![video_gif](https://media.giphy.com/media/eIm0Bjq0uswdha7CfE/giphy.gif)
+[![video_gif](https://media.giphy.com/media/eIm0Bjq0uswdha7CfE/giphy.gif)](https://youtu.be/HHL2RmPcaG0)
 
 ## The Project
 The goals / steps of this project are the following:
@@ -13,7 +13,7 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
-## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
+## [Rubric](https://review.udacity.com/#!/rubrics/571/view)
 
 ### Camera Calibration
 
