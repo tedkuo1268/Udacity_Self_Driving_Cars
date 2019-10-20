@@ -19,7 +19,7 @@ The goals / steps of this project are the following:
 
 #### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
-The code for this step is contained in the code cells under **Camera Calibration and Image Undistortion** of the IPython notebook located in "./Project2_Advanced_Lane_Finding/Project2_Advanced_Lane_Finding.ipynb".
+The code for this step is contained in the code cells under **Camera Calibration and Image Undistortion** of the IPython notebook [Project2_Advanced_Lane_Finding.ipynb](/Project2_Advanced_Lane_Finding/Project2_Advanced_Lane_Finding.ipynb).
 
 First of all, I prepared "object points" `obj_p`, which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image. To detect the calibration pattern, I used the function `cv2.findChessboardCorners()` to find all the chessboard corners in [camera_cal](). These corners will then be appended to `img_points`, which are 2D points on image, with the (x, y) pixel position, and every time the corners are detected, `obj_p` will be appended to `obj_points`.
 
@@ -33,44 +33,39 @@ Original Image            |  Undistorted Image
 
 #### 1. Provide an example of a distortion-corrected image.
 
-To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
-![alt text][image2]
+After finding the camera calibration and distortion coefficients, we can apply them to the test images using `cv2.undistort()`. The result is as follow:
+Original Test Image            |  Undistorted Test Image
+:-------------------------:|:-------------------------:
+![alt_text](/Project2_Advanced_Lane_Finding/output_images/test_img.jpg)  |  ![alt_text](/Project2_Advanced_Lane_Finding/output_images/undist_test_img.jpg) 
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
+This step is contained in the code cells under **Gradients and Color Transform** of the IPython notebook [Project2_Advanced_Lane_Finding.ipynb](/Project2_Advanced_Lane_Finding/Project2_Advanced_Lane_Finding.ipynb).
 
-![alt text][image3]
+I used a combination of color and gradient thresholds to generate a binary image. For the gradient threshold, I use the intersection of the gradient magnitude threshold and gradient direction threshold (eliminate the gradient which is close to horizontal direction). For the color threshold, I use the intersection of the "S" channel in the HSL color space and the "R" channel in the RGB color space, which shows a good identification of yellow and white lines. Finally, I generated the binary image with the union of both gradient and color thresholds.
+
+Here's an example of my output for this step. 
+
+![alt text](/Project2_Advanced_Lane_Finding/output_images/binary_test_img.jpg) 
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
+This step is contained in the code cells under **Perspective Transform** of the IPython notebook [Project2_Advanced_Lane_Finding.ipynb](/Project2_Advanced_Lane_Finding/Project2_Advanced_Lane_Finding.ipynb).
 
-```python
-src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
-dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
-```
+First, I used trial and error to find the lines which are parallel to the straight road lines in the original undistorted image like the image below:
+![alt text](/Project2_Advanced_Lane_Finding/output_images/find_parallel_straight_lines.jpg) 
 
-This resulted in the following source and destination points:
-
+Then the four vertices (two for each line), will serve as the hardcoded souce points (`src`). The destination points (`dst`) will just be the same size as the original image. The souce points (`src`). The destination points (`dst`) I chose are as follow:
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
+| 0, 720        | 0, 720        | 
+| 1280, 720     | 1280, 720     |
+| 555, 460      | 0, 0          |
+| 725, 460      | 1280, 0       |
 
-I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
+After haveing the source and destination points, we can use the `cv2.getPerspectiveTransform()` function to get the transformation matrix. Then the warped image can be generated by using the `cv2.warpPerspective()` function. We can see that the lines appear to be parallel in the warped image
 
-![alt text][image4]
+![alt text](/Project2_Advanced_Lane_Finding/output_images/warped_straight_lines.jpg) 
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
@@ -94,7 +89,7 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](https://youtu.be/HHL2RmPcaG0)
 
 ---
 
