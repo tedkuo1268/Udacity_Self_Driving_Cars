@@ -43,7 +43,7 @@ Original Test Image        |  Undistorted Test Image
 
 This step is contained in the code cells under **Gradients and Color Transform** of the IPython notebook [Project2_Advanced_Lane_Finding.ipynb](/Project2_Advanced_Lane_Finding/Project2_Advanced_Lane_Finding.ipynb).
 
-I used a combination of color and gradient thresholds to generate a binary image. For the gradient threshold, I use the intersection of the gradient magnitude threshold and gradient direction threshold (eliminate the gradient which is close to horizontal direction). For the color threshold, I use the intersection of the "S" channel in the HSL color space and the "R" channel in the RGB color space, which shows a good identification of yellow and white lines. Finally, I generated the binary image with the union of both gradient and color thresholds.
+I used a combination of color and gradient thresholds to generate a binary image. For the gradient threshold, I use the intersection of the gradient magnitude threshold and gradient direction threshold (eliminate the gradient which is close to horizontal direction). For the color threshold, I masked yellow line with **H** and **S** channels in HSL color space and masked white line with **L** channel in HSL color space and **R** channel in RGB color space. Finally, I generated the binary image with the union of both gradient and color thresholds.
 
 Here's an example of my output for this step. 
 
@@ -171,4 +171,7 @@ Here's a [link to my video result](https://youtu.be/HHL2RmPcaG0)
 ### Discussion
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+
+If the thresholding of the image fails, it's definitely that the lane detection will not succeed because we cannot identify the correct lines from the binary image. After some testing, this pipeline is likely to fail when there is an extreme condition, such as too bright or too dark, in the image. To solve this problem, techniques other than thresholding must be used. One example is convolutional neural network (CNN), and we can use it to train a more robust model for lane detection.
+
 
