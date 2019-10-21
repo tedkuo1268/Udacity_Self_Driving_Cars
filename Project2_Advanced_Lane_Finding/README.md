@@ -1,5 +1,5 @@
 # Project 4 - Advanced Lane Finding
-[![video_gif](https://media.giphy.com/media/eIm0Bjq0uswdha7CfE/giphy.gif)](https://youtu.be/HHL2RmPcaG0)
+[![video_gif](https://media.giphy.com/media/MXLfaZYTU48Oj7b3Ih/giphy.gif)](https://youtu.be/fbeFyb_wN-Y)
 
 ## The Project
 The goals / steps of this project are the following:
@@ -164,7 +164,7 @@ After doing all the steps above, we can finally transform the lines we found bac
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](https://youtu.be/HHL2RmPcaG0)
+Here's a [link to my video result](https://youtu.be/fbeFyb_wN-Y)
 
 ---
 
