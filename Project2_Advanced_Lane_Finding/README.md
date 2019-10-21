@@ -1,5 +1,5 @@
 # Project 4 - Advanced Lane Finding
-[![video_gif](https://media.giphy.com/media/MXLfaZYTU48Oj7b3Ih/giphy.gif)](https://youtu.be/fbeFyb_wN-Y)
+[![video_gif](https://media.giphy.com/media/YPb3K4VswvTiYh4i9y/giphy.gif)](https://youtu.be/fbeFyb_wN-Y)
 
 ## The Project
 The goals / steps of this project are the following:
