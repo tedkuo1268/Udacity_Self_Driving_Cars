@@ -154,7 +154,7 @@ The equation of find the radius of curvature can be found [here](https://www.int
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-After doing all the steps above, we can finally transform the lines we found back onto the road image, which is implemented in `draw_onto_road()`. To do this, I used the `cv2.getPerspectiveTransform()` function to get the **inverse** transformation matrix `Minv` by just swapping the source and destination points. Plugging in `Minv` and the lane in bird's-eye view to `cv2.warpPerspective()`, we will get an unwarped lan and can be overlaid on the road image. The result is shown in the following picure:
+After doing all the steps above, we can finally transform the lines we found back onto the road image, which is implemented in `draw_onto_road()`. To do this, I used the `cv2.getPerspectiveTransform()` function to get the **inverse** transformation matrix `Minv` by just swapping the source and destination points. Plugging in `Minv` and the lane in bird's-eye view to `cv2.warpPerspective()`, we will get an unwarped lan and can be overlaid on the road image. The result is shown as the following picure:
 
 ![alt_text](/Project2_Advanced_Lane_Finding/output_images/test_img_output.jpg) 
 
