@@ -140,7 +140,7 @@ Binary Bird's-eye View     |  Bird's-eye View with Detected Lines and Fitted Pol
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-1. **Radius of Curvature**: In the `line_update` method in `Line` class, the following line of code does the calculation of the radius of curvature:
+**Radius of Curvature**: In the `line_update` method in `Line` class, the following line of code does the calculation of the radius of curvature:
 
 ```python
 self.radius_of_curvature = ((1 + (2*self.best_fit_meter[0]*y_eval*ym_per_pix + self.best_fit_meter[1])**2)**1.5) / np.absolute(2*self.best_fit_meter[0])
@@ -148,9 +148,9 @@ self.radius_of_curvature = ((1 + (2*self.best_fit_meter[0]*y_eval*ym_per_pix + s
 
 The parameter `y_eval` is the y-value where we want the radius of curvature. The value I chose here is the maximum y-value which correspond to the position just in front of the car.
 
-The equation of find the radius of curvature can be found[here](https://www.intmath.com/applications-differentiation/8-radius-curvature.php).
+The equation of find the radius of curvature can be found [here](https://www.intmath.com/applications-differentiation/8-radius-curvature.php).
 
-2. **Vehicle Offset from the Lane Center**: To obtain the offset value, we can find the middle position of the lane first and then calculate the difference between the middle position of the lane and the middle position of the image, and finally, convert the difference from pixels to meter. This part is implemented in `calculate_offset()` function. 
+**Vehicle Offset from the Lane Center**: To obtain the offset value, we can find the middle position of the lane first and then calculate the difference between the middle position of the lane and the middle position of the image, and finally, convert the difference from pixels to meter. This part is implemented in `calculate_offset()` function. 
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
