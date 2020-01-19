@@ -80,7 +80,7 @@ The difference between the original data set and the augmented data set is the f
 I used the original LeNet-5 architecture as the baseline and compared with two different modified architecture as follows:
 
 | Baseline                                       |
-|:----------------------------------------------:|
+|:---------------:|:----------------------------:|
 | Layer         		|     Description	        					| 
 | Input         		| 32x32x3 RGB image   							| 
 | Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
