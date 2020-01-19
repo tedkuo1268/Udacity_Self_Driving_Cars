@@ -79,18 +79,23 @@ The difference between the original data set and the augmented data set is the f
 
 I used the original LeNet-5 architecture as the baseline and compared with two different modified architecture as follows:
 
-| Baseline                                       |
+| Baseline        |                              |
 |:---------------:|:----------------------------:|
 | Layer         		|     Description	        					| 
 | Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
+| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x6 |
+| ReLU					|												|
+| Dropout					|	keep probability = 0.6											|
+| Max pooling	      	| 2x2 stride,  outputs 14x14x6 				|
+| Convolution 5x5	    | 1x1 stride, valid padding, outputs 10x10x16   |
+| ReLU					|												|
+| Dropout					|	keep probability = 0.6											|
+| Max pooling	      	| 2x2 stride,  outputs 5x5x16 				|
+| Fully connected		| inputs: 400, outputs: 120 |
+| Fully connected		| inputs: 120, outputs: 84  |
+| Fully connected		| inputs: 84, outputs: 43  |
+
+
  
 Above that, I also implemented model boosting to achieve higher accuracy. 
 
