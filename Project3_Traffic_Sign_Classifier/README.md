@@ -1,8 +1,7 @@
-# **Traffic Sign Recognition** 
+# **Traffic Sign Classifier** 
 
 ## Writeup
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
 
 ---
 
@@ -28,38 +27,34 @@ The goals / steps of this project are the following:
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
-## Rubric Points
-### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
-
 ---
 ### Writeup / README
-
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
-
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ### Data Set Summary & Exploration
 
 #### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
-I used the pandas library to calculate summary statistics of the traffic
-signs data set:
+Below are summary statistics of the traffic signs data set:
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+* The size of training set is 34799
+* The size of the validation set is 4410
+* The size of test set is 12630
+* The shape of a traffic sign image is (32, 32, 3)
+* The number of unique classes/labels in the data set is 43
 
 #### 2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+Below is the histogram of training dataset. We can see that the dataset is highly imbalanced, and this negatively affects the accuracy of the classifier. To overcome this, we can train the classifier on an augmented training dataset which can lead to higher classifying accuracy. The detail on how to generate augmented dataset will be explained in the next part.
 
 ![alt text][image1]
 
 ### Design and Test a Model Architecture
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
+
+As mentioned in the above section, the dataset is highly imbalanced, so we need to generate additional data to the minority classes to balance the dataset. Here I implement deep convolutional generative adversarial networks (DCGANs) to generate fake images to the dataset. The basic GAN architecture is as the following figure. The generator takes Gaussian noise and created samples matching the dimension of the training samples. The discriminator takes samples from training dataset as well as generated samples and attempts to recognize if a sample is real (i.e. coming from training set) or fake (i.e. generated one). Below are some fake images from three of the minority classes (below 1000 examples). The generated images are pretty much like the real images in the dataset. Finally, I augmented the dataset by generating fake images to all the minority classes until they have 1000 examples.
+
+After augmenting the dataset, I did 
 
 As a first step, I decided to convert the images to grayscale because ...
 
@@ -82,8 +77,8 @@ The difference between the original data set and the augmented data set is the f
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
-My final model consisted of the following layers:
-
+I used the original LeNet-5 architecture as the baseline and compared with two different modified architecture as follows:
+| Baseline                                               |
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32x3 RGB image   							| 
@@ -96,7 +91,7 @@ My final model consisted of the following layers:
 |						|												|
 |						|												|
  
-
+Above that, I also implemented model boosting to achieve higher accuracy. 
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
