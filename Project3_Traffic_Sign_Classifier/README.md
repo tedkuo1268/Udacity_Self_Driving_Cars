@@ -127,7 +127,7 @@ To get the final model, I compared the following three different network archite
 
 Here are the accuracies of three architectures:
 | Architecture    	      | Training Accuracy | Validation Accuracy	| 
-|:----------------------:|:-----------------:|:-------------------:|
+|:-----------------------|:-----------------:|--------------------:|
 | Original LeNet-5       |  	                |                     |
 | Modified LeNet-5       |                   |                     |
 | Two-stage architecture	|			                |                     |
@@ -138,7 +138,7 @@ To prevent overfitting, I added dropout layers to all the layers.
 
 Here are the accuracies of three architectures with boosting algorithm:
 | Architecture    	      | Training Accuracy | Validation Accuracy	| 
-|:----------------------:|:-----------------:|:-------------------:|
+|:-----------------------|:-----------------:|--------------------:|
 | Original LeNet-5       |  	                |                     |
 | Modified LeNet-5       |                   |                     |
 | Two-stage architecture	|			                |                     |
