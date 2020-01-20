@@ -126,6 +126,13 @@ To get the final model, I compared the following three different network archite
 * Two-stage architecture: Two convolutional layers and two fully connected layers, and both the features' output from first and second convolutional layers are concatenated and fed to the fully connected layer.The feature sizes of two convolutional layers are also 38 and 64. This architecture is based on this ![http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf]paper.
 
 Here are the accuracies of three architectures:
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
 | Architecture    	      | Training Accuracy | Validation Accuracy	| 
 | ----------------------- |:-----------------:| -------------------:|
 | Original LeNet-5       |  	                |                     |
