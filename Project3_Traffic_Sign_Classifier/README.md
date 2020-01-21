@@ -1,19 +1,7 @@
 # **Traffic Sign Classifier** 
-
-## Writeup
-
-
 ---
 
-**Build a Traffic Sign Recognition Project**
 
-The goals / steps of this project are the following:
-* Load the data set (see below for links to the project data set)
-* Explore, summarize and visualize the data set
-* Design, train and test a model architecture
-* Use the model to make predictions on new images
-* Analyze the softmax probabilities of the new images
-* Summarize the results with a written report
 
 
 [//]: # (Image References)
@@ -27,10 +15,9 @@ The goals / steps of this project are the following:
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
----
-### Writeup / README
 
 ### Data Set Summary & Exploration
+---
 
 #### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
@@ -44,39 +31,36 @@ Below are summary statistics of the traffic signs data set:
 
 #### 2. Include an exploratory visualization of the dataset.
 
-Below is the histogram of training dataset. We can see that the dataset is highly imbalanced, and this negatively affects the accuracy of the classifier. To overcome this, we can train the classifier on an augmented training dataset which can lead to higher classifying accuracy. The detail on how to generate augmented dataset will be explained in the next part.
+Below is the histogram of the training dataset. We can see that the dataset is highly imbalanced, and this negatively affects the accuracy of the classifier. To overcome this, we can train the classifier on an augmented training dataset which can lead to higher classifying accuracy. The detail on how to generate augmented dataset will be explained in the next part.
 
 ![alt text][image1]
 
 ### Design and Test a Model Architecture
+---
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As mentioned in the above section, the dataset is highly imbalanced, so we need to generate additional data to the minority classes to balance the dataset. Here I implement deep convolutional generative adversarial networks (DCGANs) to generate fake images to the dataset. The basic GAN architecture is as the following figure. The generator takes Gaussian noise and created samples matching the dimension of the training samples. The discriminator takes samples from training dataset as well as generated samples and attempts to recognize if a sample is real (i.e. coming from training set) or fake (i.e. generated one). Finally, I augmented the dataset by generating fake images to all the minority classes until they have 1000 examples. Here are some examples of an original image and augmented image:
-
-![alt text][image3] ![alt text][image3]
-![alt text][image3] ![alt text][image3]
-![alt text][image3] ![alt text][image3]
-
-After augmenting the dataset, 
-
-As a first step, I decided to convert the images to grayscale because ...
-
-Here is an example of a traffic sign image before and after grayscaling.
-
-![alt text][image2]
-
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
+As mentioned in the above section, the dataset is highly imbalanced, so we need to generate additional data to the minority classes to balance the dataset. Here I implement deep convolutional generative adversarial networks (DCGANs) to generate fake images to the dataset. The basic GAN architecture is as the following figure. The generator takes Gaussian noise and created samples matching the dimension of the training samples. The discriminator takes samples from training dataset as well as generated samples and attempts to recognize if a sample is real (i.e. coming from training set) or fake (i.e. generated one). 
 
 ![alt text][image3]
 
-The difference between the original data set and the augmented data set is the following ... 
+To balance the dataset, I augmented the dataset by generating fake images to all the minority classes until they have 1000 examples. Here are some examples of augmented images:
+
+![alt text][image3] ![alt text][image3]
+![alt text][image3] ![alt text][image3]
+![alt text][image3] ![alt text][image3]
+
+For data preprocessing, I did the following steps:
+
+* Convert the image from RGB color space to YUV color space, and use only Y channel for image recognition. The result in this ![https://arxiv.org/pdf/1412.6980.pdf]papaer shows that using only Y channel performs better than using RGB colored image.
+
+* Increase the global contrast of images by using histogram equalization. 
+
+* Standardize the images to have zero mean and standard deviation of one.
+
+Here is an example of a traffic sign image before and after preprocessing.
+
+![alt text][image2]
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
@@ -127,33 +111,28 @@ To get the final model, I compared the following three different network archite
 
 Here are the accuracies of three architectures:
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
 
-| Architecture    	      | Training Accuracy | Validation Accuracy	| 
-| ----------------------- |:-----------------:| -------------------:|
-| Original LeNet-5       |  	                |                     |
+| Architecture    	     | Training Accuracy | Validation Accuracy | 
+| ---------------------- |:-----------------:| -------------------:|
+| Original LeNet-5       |  	               |                     |
 | Modified LeNet-5       |                   |                     |
-| Two-stage architecture	|			                |                     |
+| Two-stage architecture |			             |                     |
 
 From the above table, we can see that the validation accuracy of the original LeNet-5 architecture is about 93%, and the training accuracy is also just about %. This underfitting may due to the insufficient extracted features, so I modified the architecture to have deeper filter depth to extract more features from the image. The result shows a significant improvement of extracting more features, which has the training accuracy of %, and validation accuracy of %. Following this ![http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf]paper. I construct the final architecture that concatenate the outputs of two convolutional layers and feeds to the fully connected layer. In doing so, the classifier is fed with both  "global" shape and structure from the second stage and "local" motifs with more precise detail from the first stage.
 
 To prevent overfitting, I added dropout layers to all the layers.
 
 Here are the accuracies of three architectures with boosting algorithm:
-| Architecture    	      | Training Accuracy | Validation Accuracy	| 
-| ----------------------- |:-----------------:| -------------------:|
-| Original LeNet-5       |  	                |                     |
+
+| Architecture    	     | Training Accuracy | Validation Accuracy | 
+| ---------------------- |:-----------------:| -------------------:|
+| Original LeNet-5       |  	               |                     |
 | Modified LeNet-5       |                   |                     |
-| Two-stage architecture	|			                |                     |
+| Two-stage architecture |			             |                     |
 
 The result shows that by using ensemble methods, the model achieve higher validation accuracy than a single "weak learner" does. The boosting algorithm is explained in section 2.
 
 So I chose      as the final model, and the accuracy on the test dataset is  %.
-
 
 ### Test a Model on New Images
 
