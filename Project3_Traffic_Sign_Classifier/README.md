@@ -4,15 +4,15 @@
 [//]: # (Image References)
 
 [image1]: ./images/data_hist.png "dataset histogram"
-[image2]: ./images/GAN.pdf "GAN architecture"
+[image2]: ./images/gan.pdf "GAN architecture"
 [image3]: ./images/fake_image1.jpg "Fake image 1"
 [image4]: ./images/fake_image2.jpg "Fake image 2"
 [image5]: ./images/fake_image3.jpg "Fake image 3"
 [image6]: ./images/fake_image4.jpg "Fake image 4"
 [image7]: ./images/fake_image5.jpg "Fake image 5"
-[image8]: ./images/original_image.png "image without preprocessing"
+[image8]: ./images/original_image.jpg "image without preprocessing"
 [image9]: ./images/preprocessed_image.jpg "precessed image"
-[image10]: ./images/new_test_images.jpg "New test images"
+[image10]: ./images/new_test_images.png "New test images"
 
 ### Data Set Summary & Exploration
 ---
@@ -50,7 +50,7 @@ To balance the dataset, I augmented the dataset by generating fake images to all
 
 For data preprocessing, I did the following steps:
 
-* Convert the image from RGB color space to YUV color space, and use only Y channel for image recognition. The result in this ![https://arxiv.org/pdf/1412.6980.pdf]papaer shows that using only Y channel performs better than using RGB colored image.
+* Convert the image from RGB color space to YUV color space, and use only Y channel for image recognition. The result in this [paper](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf) shows that using only Y channel performs better than using RGB colored image.
 
 * Increase the global contrast of images by using histogram equalization. 
 
@@ -84,7 +84,7 @@ On top of that, I also implemented boosting to get an ensemble model to achieve 
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used Adam optimizer, which is proved to be more computationally efficient and has little memory requirements from the ![https://arxiv.org/pdf/1412.6980.pdf]papaer. 
+To train the model, I used Adam optimizer, which is proved to be more computationally efficient and has little memory requirements from the [paper](https://arxiv.org/pdf/1412.6980.pdf). 
 
 Other hyperparameters are as follows:
 * batch size: 128
@@ -105,7 +105,7 @@ To get the final model, I compared the following three different network archite
 
 * Original LeNet-5 architecture: Two convolutional layers and three fully connected layers
 * Modified LeNet-5 architecture: Also two convolutional layers and three fully connected layers, but in the convolutional layers, the feature sizes are 38 and 64.
-* Two-stage architecture: Two convolutional layers and two fully connected layers, and both the features' output from first and second convolutional layers are concatenated and fed to the fully connected layer.The feature sizes of two convolutional layers are also 38 and 64. This architecture is based on this ![http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf]paper.
+* Two-stage architecture: Two convolutional layers and two fully connected layers, and both the features' output from first and second convolutional layers are concatenated and fed to the fully connected layer.The feature sizes of two convolutional layers are also 38 and 64. This architecture is based on this [paper](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf).
 
 Here are the accuracies of three architectures:
 
@@ -115,7 +115,7 @@ Here are the accuracies of three architectures:
 | Modified LeNet-5       |       99.7%       |        96.7%        |
 | Two-stage architecture |			 99.9%       |        94.8%        |
 
-From the above table, we can see that the validation accuracy of the original LeNet-5 architecture is just over 94%, and the training accuracy is also just about 98%. This underfitting may due to the insufficient extracted features, so I modified the architecture to have deeper filter depth to extract more features from the image. The result shows a significant improvement of extracting more features, which has the training accuracy of 99.7%, and validation accuracy of 96.7%. Following this ![http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf]paper. I construct the final architecture that concatenate the outputs of two convolutional layers and feeds to the fully connected layer. In doing so, the classifier is fed with both  "global" shape and structure from the second stage and "local" motifs with more precise detail from the first stage. 
+From the above table, we can see that the validation accuracy of the original LeNet-5 architecture is just over 94%, and the training accuracy is also just about 98%. This underfitting may due to the insufficient extracted features, so I modified the architecture to have deeper filter depth to extract more features from the image. The result shows a significant improvement of extracting more features, which has the training accuracy of 99.7%, and validation accuracy of 96.7%. Following this [paper](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf), I construct the final architecture that concatenate the outputs of two convolutional layers and feeds to the fully connected layer. In doing so, the classifier is fed with both  "global" shape and structure from the second stage and "local" motifs with more precise detail from the first stage. 
 
 To prevent overfitting, I added dropout layers to all the layers with keep probability of 0.6.
 
