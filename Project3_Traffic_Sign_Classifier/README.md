@@ -1,20 +1,18 @@
 # **Traffic Sign Classifier** 
 ---
 
-
-
-
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
-
+[image1]: ./images/data_hist.png "dataset histogram"
+[image2]: ./images/GAN.pdf "GAN architecture"
+[image3]: ./images/fake_image1.jpg "Fake image 1"
+[image4]: ./images/fake_image2.jpg "Fake image 2"
+[image5]: ./images/fake_image3.jpg "Fake image 3"
+[image6]: ./images/fake_image4.jpg "Fake image 4"
+[image7]: ./images/fake_image5.jpg "Fake image 5"
+[image8]: ./images/original_image.png "image without preprocessing"
+[image9]: ./images/preprocessed_image.jpg "precessed image"
+[image10]: ./images/new_test_images.jpg "New test images"
 
 ### Data Set Summary & Exploration
 ---
@@ -42,13 +40,13 @@ Below is the histogram of the training dataset. We can see that the dataset is h
 
 As mentioned in the above section, the dataset is highly imbalanced, so we need to generate additional data to the minority classes to balance the dataset. Here I implement deep convolutional generative adversarial networks (DCGANs) to generate fake images to the dataset. The basic GAN architecture is as the following figure. The generator takes Gaussian noise and created samples matching the dimension of the training samples. The discriminator takes samples from training dataset as well as generated samples and attempts to recognize if a sample is real (i.e. coming from training set) or fake (i.e. generated one). 
 
-![alt text][image3]
+![alt text][image2]
 
 To balance the dataset, I augmented the dataset by generating fake images to all the minority classes until they have 1000 examples. Here are some examples of augmented images:
 
-![alt text][image3] ![alt text][image3]
-![alt text][image3] ![alt text][image3]
-![alt text][image3] ![alt text][image3]
+![alt text][image3] ![alt text][image4]
+![alt text][image5] ![alt text][image6]
+![alt text][image7] 
 
 For data preprocessing, I did the following steps:
 
@@ -60,24 +58,24 @@ For data preprocessing, I did the following steps:
 
 Here is an example of a traffic sign image before and after preprocessing.
 
-![alt text][image2]
+![alt text][image8] ![alt text][image9]
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
 My final model consisted of the following layers:
 
-| Layer         		|     Description	        			               		| 
+| Layer         	|     Description	        		  	            | 
 |:---------------:|:-------------------------------------------:|
-| Input         		| 32x32x3 RGB image   						                 	| 
-| Convolution 5x5 | 1x1 stride, valid padding, outputs 28x28x6  |
-| ReLU					       |										                                 		|
-| Dropout					    |	keep probability = 0.6									           		|
-| Max pooling	    | 2x2 stride,  outputs 14x14x6 			           	|
-| Convolution 5x5	| 1x1 stride, valid padding, outputs 10x10x16 |
-| ReLU				       	|												                                 |
-| Dropout				    	|	keep probability = 0.6					           						|
-| Max pooling	    | 2x2 stride,  outputs 5x5x16             				|
+| Input         	| 32x32x3 RGB image   						         	  | 
+| Convolution 5x5 | 1x1 stride, valid padding, outputs 28x28x38 |
+| ReLU			      |										                 	      	|
+| Dropout					|	keep probability = 0.6				           		|
+| Max pooling	    | 2x2 stride,  outputs 14x14x38 			       	|
+| Convolution 5x5	| 1x1 stride, valid padding, outputs 10x10x64 |
+| ReLU				   	|												                      |
+| Dropout				 	|	keep probability = 0.6					           	|
+| Max pooling	    | 2x2 stride,  outputs 5x5x64             	  |
 | Fully connected	| inputs: 400, outputs: 120                   |
 | Fully connected	| inputs: 120, outputs: 84                    |
 | Fully connected	| inputs: 84, outputs: 43                     |
@@ -90,18 +88,18 @@ To train the model, I used Adam optimizer, which is proved to be more computatio
 
 Other hyperparameters are as follows:
 * batch size: 128
-* number of epochs: 25
+* number of epochs: 30
 * learning rate: 0.001
 
 For model boosting:
-* number of weak learners: 10
+* number of weak learners: 5
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results (with boosting) were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+* training set accuracy of 99.7%
+* validation set accuracy of 97.8%
+* test set accuracy of 96.5%
 
 To get the final model, I compared the following three different network architectures. 
 
@@ -111,28 +109,27 @@ To get the final model, I compared the following three different network archite
 
 Here are the accuracies of three architectures:
 
+| Architecture    	     | Training Accuracy | Validation Accuracy | 
+| ---------------------- |:-----------------:| -------------------:|
+| Original LeNet-5       |  	   98.1%       |        94.2%        |
+| Modified LeNet-5       |       99.7%       |        96.7%        |
+| Two-stage architecture |			 99.9%       |        94.8%        |
+
+From the above table, we can see that the validation accuracy of the original LeNet-5 architecture is just over 94%, and the training accuracy is also just about 98%. This underfitting may due to the insufficient extracted features, so I modified the architecture to have deeper filter depth to extract more features from the image. The result shows a significant improvement of extracting more features, which has the training accuracy of 99.7%, and validation accuracy of 96.7%. Following this ![http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf]paper. I construct the final architecture that concatenate the outputs of two convolutional layers and feeds to the fully connected layer. In doing so, the classifier is fed with both  "global" shape and structure from the second stage and "local" motifs with more precise detail from the first stage. 
+
+To prevent overfitting, I added dropout layers to all the layers with keep probability of 0.6.
+
+Here are the accuracies of three architectures with **boosting algorithm**:
 
 | Architecture    	     | Training Accuracy | Validation Accuracy | 
 | ---------------------- |:-----------------:| -------------------:|
-| Original LeNet-5       |  	               |                     |
-| Modified LeNet-5       |                   |                     |
-| Two-stage architecture |			             |                     |
-
-From the above table, we can see that the validation accuracy of the original LeNet-5 architecture is about 93%, and the training accuracy is also just about %. This underfitting may due to the insufficient extracted features, so I modified the architecture to have deeper filter depth to extract more features from the image. The result shows a significant improvement of extracting more features, which has the training accuracy of %, and validation accuracy of %. Following this ![http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf]paper. I construct the final architecture that concatenate the outputs of two convolutional layers and feeds to the fully connected layer. In doing so, the classifier is fed with both  "global" shape and structure from the second stage and "local" motifs with more precise detail from the first stage.
-
-To prevent overfitting, I added dropout layers to all the layers.
-
-Here are the accuracies of three architectures with boosting algorithm:
-
-| Architecture    	     | Training Accuracy | Validation Accuracy | 
-| ---------------------- |:-----------------:| -------------------:|
-| Original LeNet-5       |  	               |                     |
-| Modified LeNet-5       |                   |                     |
-| Two-stage architecture |			             |                     |
+| Original LeNet-5       |  	   99.2%       |        96.4%        |
+| Modified LeNet-5       |       99.9%       |        97.8%        |
+| Two-stage architecture |			 100.0%      |        96.3%        |
 
 The result shows that by using ensemble methods, the model achieve higher validation accuracy than a single "weak learner" does. The boosting algorithm is explained in section 2.
 
-So I chose      as the final model, and the accuracy on the test dataset is  %.
+Based on the above table, I chose **Modified LeNet-5** as the final model, and the accuracy on the test dataset is **96.5%**.
 
 ### Test a Model on New Images
 
@@ -140,39 +137,76 @@ So I chose      as the final model, and the accuracy on the test dataset is  %.
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![alt text][image10]
 
-The first image might be difficult to classify because ...
+The first image might be difficult to classify because of its orientation. The last image might also be difficult to classify because the sign is covered with snow.
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 Here are the results of the prediction:
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Image			           |     Prediction	      | 
+|:--------------------:|:--------------------:| 
+| Turn right ahead	   | Speed limit (50km/h) | 
+| Speed limit (30km/h) | Speed limit (30km/h) |
+| Stop sign			    	 | Stop sign    			  |
+| Keep right	         | Keep right           |
+| Slippery road        | Speed limit (80km/h) |
 
-
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The test accuracy on new images is 60%, which is below the accuracy on the test set. One of the main reason is that there are only five images so the accuracy is likely to be very different from the accuracy on large dataset. Also, the wrongly predicted images are the images that are difficult to classify as mentioned in the previous part.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+* First image (True label: Turn right ahead)
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| Probability | Prediction	                          | 
+|:-----------:|:-------------------------------------:| 
+| 12.1%       | Speed limit (50km/h)                  | 
+| 8.9%    	  | Children crossing                     |
+| 8.0%				| Speed limit (80km/h)		  					  |
+| 6.1%	   		| Beware of ice/snow                    |
+| 5.7%			  | Right-of-way at the next intersection |
 
 
-For the second image ... 
+* Second image (True label: Speed limit (30km/h))
+
+| Probability | Prediction	          | 
+|:-----------:|:---------------------:| 
+| 38.1%       | Speed limit (30km/h)  | 
+| 22.0%    	  | Speed limit (20km/h)  |
+| 14.9%				| Speed limit (80km/h)	|
+| 6.8%	   		| Speed limit (70km/h)  |
+| 5.7%			  | Speed limit (120km/h) |
+
+
+* Third image (True label: Stop sign)
+
+| Probability | Prediction	          | 
+|:-----------:|:---------------------:| 
+| 40.7%       | Stop sign             | 
+| 10.1%    	  | Speed limit (120km/h) |
+| 4.1%				| Speed limit (80km/h)	|
+| 3.4%	   		| Speed limit (60km/h)  |
+| 2.9%			  | No vehicles    			  |
+
+
+* Fourth image (True label: Keep right)
+
+| Probability | Prediction	                                 | 
+|:-----------:|:--------------------------------------------:| 
+| 99.8%       | Keep right                                   | 
+| 0.1%    	  | Turn left ahead                              |
+| 0.0%				| No vehicles							                  	 |
+| 0.0%	   		| Dangerous curve to the right                 |
+| 0.0%			  | No passing for vehicles over 3.5 metric tons |
+
+
+* Fifth image (True label: Slippery road)
+
+| Probability | Prediction	          | 
+|:-----------:|:---------------------:| 
+| 8.1%        | Speed limit (80km/h)  | 
+| 7.0%    	  | Speed limit (120km/h) |
+| 5.6%				| Traffic signals			  |
+| 4.9%	   		| Speed limit (50km/h)  |
+| 4.9%			  | Children crossing     |
