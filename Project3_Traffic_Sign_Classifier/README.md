@@ -4,7 +4,7 @@
 [//]: # (Image References)
 
 [image1]: ./images/data_hist.png "dataset histogram"
-[image2]: ./images/gan.pdf "GAN architecture"
+[image2]: ./images/gan.jpg "GAN architecture"
 [image3]: ./images/fake_image1.jpg "Fake image 1"
 [image4]: ./images/fake_image2.jpg "Fake image 2"
 [image5]: ./images/fake_image3.jpg "Fake image 3"
@@ -110,7 +110,7 @@ To get the final model, I compared the following three different network archite
 Here are the accuracies of three architectures:
 
 | Architecture    	     | Training Accuracy | Validation Accuracy | 
-| ---------------------- |:-----------------:| -------------------:|
+| ---------------------- |:-----------------:|:-------------------:|
 | Original LeNet-5       |  	   98.1%       |        94.2%        |
 | Modified LeNet-5       |       99.7%       |        96.7%        |
 | Two-stage architecture |			 99.9%       |        94.8%        |
@@ -122,7 +122,7 @@ To prevent overfitting, I added dropout layers to all the layers with keep proba
 Here are the accuracies of three architectures with **boosting algorithm**:
 
 | Architecture    	     | Training Accuracy | Validation Accuracy | 
-| ---------------------- |:-----------------:| -------------------:|
+| ---------------------- |:-----------------:|:-------------------:|
 | Original LeNet-5       |  	   99.2%       |        96.4%        |
 | Modified LeNet-5       |       99.9%       |        97.8%        |
 | Two-stage architecture |			 100.0%      |        96.3%        |
