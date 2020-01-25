@@ -1,8 +1,6 @@
 # Udacity Self Driving Cars
 This repository contains the projects done in Udacity Self-Driving Car Engineer Nanodegree
 
----
-
 ## Projects Outline
 
 ### Project 1: Finding Lane line (keywords: computer vision, OpenCV)
